@@ -1,0 +1,316 @@
+@import "tailwindcss";
+
+/* ————————————————————————————————————————————————————————————
+   Design tokens
+   ———————————————————————————————————————————————————————————— */
+
+@theme {
+  --color-ink: #0f0f0e;
+  --color-carbon: #171716;
+  --color-graphite: #262624;
+  --color-iron: #3b3a37;
+  --color-concrete: #625f59;
+  --color-stone: #a29d93;
+  --color-sand: #d5cdbf;
+  --color-paper: #eeeae3;
+  --color-paper-deep: #e4dfd5;
+  --color-bone: #f6f3ee;
+  --color-terra: #a4462c;
+  --color-brass: #a08c66;
+
+  --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-instrument-serif), ui-serif, Georgia, serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, SFMono-Regular, monospace;
+
+  --text-micro: 0.6875rem;
+  --text-micro--line-height: 1.4;
+  --text-mega: clamp(4.25rem, 15.5vw, 17rem);
+  --text-mega--line-height: 0.8;
+  --text-display: clamp(3.25rem, 9vw, 10rem);
+  --text-display--line-height: 0.86;
+  --text-headline: clamp(2.5rem, 5.6vw, 6.25rem);
+  --text-headline--line-height: 0.95;
+  --text-title: clamp(1.75rem, 3vw, 3.25rem);
+  --text-title--line-height: 1.04;
+  --text-lede: clamp(1.25rem, 1.9vw, 1.875rem);
+  --text-lede--line-height: 1.3;
+
+  --ease-arch: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+
+  --breakpoint-3xl: 112rem;
+}
+
+:root {
+  --gutter: clamp(1.25rem, 3.2vw, 2.75rem);
+  --col-gap: clamp(0.75rem, 1.6vw, 1.5rem);
+  --header-h: 4.5rem;
+  color-scheme: light;
+}
+
+/* ————————————————————————————————————————————————————————————
+   Base
+   ———————————————————————————————————————————————————————————— */
+
+@layer base {
+  html {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  .lenis.lenis-stopped {
+    overflow: clip;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.55;
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  :focus-visible {
+    outline: 1px solid currentColor;
+    outline-offset: 4px;
+  }
+
+  img {
+    user-select: none;
+  }
+
+  button {
+    cursor: pointer;
+  }
+}
+
+/* ————————————————————————————————————————————————————————————
+   Components & utilities
+   ———————————————————————————————————————————————————————————— */
+
+@utility frame {
+  padding-inline: var(--gutter);
+}
+
+@utility grid-12 {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--col-gap);
+}
+
+/* Small technical annotations — the drawing-sheet voice of the site. */
+@utility label {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  line-height: 1.4;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+@utility caps {
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+@utility condensed {
+  font-stretch: 72%;
+  font-variation-settings: "wdth" 72;
+}
+
+@utility expanded {
+  font-stretch: 118%;
+  font-variation-settings: "wdth" 118;
+}
+
+/* Mask for line-reveal animations: hides the line until it slides in. */
+@utility line-mask {
+  display: block;
+  overflow: clip;
+  padding-bottom: 0.06em;
+  margin-bottom: -0.06em;
+}
+
+/* Unified photographic tone — subtly desaturated so mixed sources sit together. */
+@utility tone {
+  filter: saturate(0.62) contrast(1.04);
+}
+
+@utility tone-mute {
+  filter: grayscale(1) contrast(1.06) brightness(0.96);
+}
+
+@utility hairline {
+  height: 1px;
+  background: currentColor;
+  opacity: 0.18;
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.text-pretty {
+  text-wrap: pretty;
+}
+
+/* Custom cursor: native cursor hidden only while the custom one is active. */
+html.has-cursor,
+html.has-cursor a,
+html.has-cursor button,
+html.has-cursor [role="slider"],
+html.has-cursor label {
+  cursor: none;
+}
+
+html.has-cursor input,
+html.has-cursor textarea,
+html.has-cursor select {
+  cursor: text;
+}
+
+/* Hero grid revealed around the cursor. */
+.cursor-grid {
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.22) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.22) 1px, transparent 1px);
+  background-size: 48px 48px;
+  background-position: -1px -1px;
+  mask-image: radial-gradient(
+    circle 220px at var(--mx, 50%) var(--my, 50%),
+    #000 0%,
+    rgb(0 0 0 / 0.5) 45%,
+    transparent 100%
+  );
+}
+
+/* Paper texture: a very faint drafting grid on light sections. */
+.paper-grid {
+  background-image:
+    linear-gradient(to right, rgb(15 15 14 / 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(15 15 14 / 0.045) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.ink-grid {
+  background-image:
+    linear-gradient(to right, rgb(238 234 227 / 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(238 234 227 / 0.05) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Process drawing — strokes draw in (pathLength=1), labels fade. */
+.process-drawing text {
+  fill: currentColor;
+  stroke: none;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+}
+
+.process-drawing .layer {
+  transition:
+    color 0.9s var(--ease-arch),
+    opacity 0.9s var(--ease-arch);
+}
+
+.process-drawing .layer-current {
+  color: var(--color-terra);
+}
+
+.process-drawing .layer-past {
+  color: var(--color-ink);
+  opacity: 0.5;
+}
+
+.process-drawing .draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 1.5s var(--ease-in-out-quart);
+}
+
+.process-drawing .fade {
+  stroke-opacity: 0;
+  fill-opacity: 0;
+  transition:
+    stroke-opacity 0.9s var(--ease-arch),
+    fill-opacity 0.9s var(--ease-arch);
+}
+
+.process-drawing .layer:not(.layer-future) .draw {
+  stroke-dashoffset: 0;
+}
+
+.process-drawing .layer:not(.layer-future) .fade {
+  stroke-opacity: 1;
+  fill-opacity: 1;
+}
+
+.process-drawing .wall {
+  stroke-width: 3;
+}
+
+.process-drawing .wall-thin {
+  stroke-width: 2;
+}
+
+.process-drawing .poche {
+  fill: currentColor;
+  fill-rule: evenodd;
+  fill-opacity: 0;
+  transition:
+    stroke-dashoffset 1.5s var(--ease-in-out-quart),
+    fill-opacity 1s var(--ease-arch) 0.7s;
+}
+
+.process-drawing .layer:not(.layer-future) .poche {
+  fill-opacity: 0.85;
+}
+
+.process-drawing .cut {
+  stroke-width: 1.5;
+  stroke-dasharray: 16 4 2 4;
+}
+
+/* Outline text used for inactive principle words. */
+.text-outline {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--outline-color, rgb(238 234 227 / 0.4));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -51,7 +51,11 @@ async function loadContent(): Promise<PublicContent> {
   };
 }
 
-const getCachedContent = unstable_cache(loadContent, ["cms-public-content-v1"], {
+// Vercel's data cache outlives a deployment. Keying it to the deployment means a new
+// build never serves content processed by an older version of this code.
+const CACHE_GENERATION = process.env.VERCEL_DEPLOYMENT_ID ?? process.env.VERCEL_GIT_COMMIT_SHA ?? "local";
+
+const getCachedContent = unstable_cache(loadContent, ["cms-public-content", CACHE_GENERATION], {
   tags: [CMS_TAG],
   revalidate: 600,
 });

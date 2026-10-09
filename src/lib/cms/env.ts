@@ -16,8 +16,35 @@
 
 export type CmsMode = "supabase" | "local" | "static";
 
-export const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL?.replace(/\/$/, "") ?? "";
-export const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
+// Trimmed: values pasted into a hosting dashboard often carry a stray space or newline.
+export const SUPABASE_URL = (process.env.NEXT_PUBLIC_SUPABASE_URL ?? "").trim().replace(/\/+$/, "");
+export const SUPABASE_ANON_KEY = (process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "").trim();
+
+/**
+ * Explains what is wrong with NEXT_PUBLIC_SUPABASE_URL, or null when its shape
+ * is right. (Whether the project actually exists is only known once it is called.)
+ */
+export function supabaseUrlProblem(url: string = SUPABASE_URL): string | null {
+  let parsed: URL;
+  try {
+    parsed = new URL(url);
+  } catch {
+    return "it is not a valid URL";
+  }
+  if (parsed.protocol !== "https:") return "it must start with https://";
+  if (parsed.pathname !== "/" || parsed.search || parsed.hash)
+    return "it must be the bare Project URL with no path, e.g. https://<project-ref>.supabase.co";
+  return null;
+}
+
+/** Hostname of the configured Supabase project, for error messages. */
+export function supabaseHost(): string {
+  try {
+    return new URL(SUPABASE_URL).hostname;
+  } catch {
+    return SUPABASE_URL || "(not set)";
+  }
+}
 
 /** Storage bucket holding every uploaded image and video. Created by the migration. */
 export const MEDIA_BUCKET = "project-media";

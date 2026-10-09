@@ -1,6 +1,6 @@
 import "server-only";
 import type { SupabaseClient } from "@supabase/supabase-js";
-import { MEDIA_BUCKET } from "./env";
+import { MEDIA_BUCKET, supabaseHost } from "./env";
 import { CmsError, type CmsRepository, type MediaStore } from "./repository";
 import type { CmsCategory, CmsMedia, CmsProject, UploadTarget } from "./types";
 import type { CategoryInput, ProjectInput } from "./validation";
@@ -76,8 +76,40 @@ function toProject(row: Row): CmsProject {
 
 const PROJECT_SELECT = "*, category:categories(id, name, slug), media:project_media(*)";
 
-/** Translate Postgres / PostgREST errors into messages an editor can act on. */
-function fail(error: { code?: string; message: string }): never {
+type DbError = { code?: string; message: string; details?: string; hint?: string };
+
+/** Translate Postgres / PostgREST errors into messages an editor (or a build log) can act on. */
+function fail(error: DbError): never {
+  // Network-level failure: the request never reached Supabase. postgrest-js keeps
+  // the underlying cause (e.g. ENOTFOUND) in `details`.
+  if (/fetch failed|FetchError|network/i.test(error.message) || /Caused by:/.test(error.details ?? "")) {
+    const cause = (error.details ?? "").match(/\((E[A-Z_]+|UND_ERR_[A-Z_]+)\)/)?.[1] ?? "network error";
+    const why =
+      cause === "ENOTFOUND"
+        ? "the hostname does not exist (ENOTFOUND)"
+        : cause === "EAI_AGAIN"
+          ? "the DNS lookup failed (EAI_AGAIN)"
+          : `the connection failed (${cause})`;
+    throw new CmsError(
+      "unavailable",
+      `Could not reach Supabase at ${supabaseHost()} — ${why}. Check NEXT_PUBLIC_SUPABASE_URL: it must be the exact Project URL from Supabase → Project Settings → Data API.`,
+    );
+  }
+  if (/invalid api key|no api key found/i.test(error.message))
+    throw new CmsError(
+      "unavailable",
+      `Supabase rejected the API key. NEXT_PUBLIC_SUPABASE_ANON_KEY must be the publishable (or anon) key of the same project as ${supabaseHost()}.`,
+    );
+  if (error.code === "PGRST205" || error.code === "42P01")
+    throw new CmsError(
+      "unavailable",
+      `The CMS tables are missing in ${supabaseHost()}. Run supabase/migrations/20261008120000_cms_schema.sql in the Supabase SQL Editor. (${error.message})`,
+    );
+  if (error.code === "42501" && /permission denied for (table|schema)/i.test(error.message))
+    throw new CmsError(
+      "unavailable",
+      `The website's database role lacks table permissions (${error.message}). Re-run supabase/migrations/20261008120000_cms_schema.sql, which grants them.`,
+    );
   if (error.code === "23505") throw new CmsError("conflict", "That web address is already in use. Choose another.");
   if (error.code === "42501" || error.code === "PGRST301")
     throw new CmsError("unauthorized", "Your account is not allowed to make this change.");

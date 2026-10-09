@@ -4,9 +4,10 @@ import { cache } from "react";
 import { projects as staticProjects, staticCategories } from "@/content/projects";
 import type { PortfolioCategory, Project } from "@/lib/types";
 import { createPublicSupabase } from "@/lib/supabase/server";
-import { CMS_TAG, cmsMode } from "./env";
+import { CMS_TAG, cmsMode, supabaseUrlProblem } from "./env";
 import { createLocalRepository } from "./local-repo";
 import { toPublicProject } from "./mapping";
+import { CmsError } from "./repository";
 import { createSupabaseRepository } from "./supabase-repo";
 
 /**
@@ -27,6 +28,12 @@ async function loadContent(): Promise<PublicContent> {
   const mode = cmsMode();
   if (mode === "static") {
     return { projects: staticProjects, categories: countCategories(staticCategories, staticProjects), source: "static" };
+  }
+  if (mode === "supabase") {
+    // A misconfigured URL fails the build with a clear message instead of a bare "fetch failed".
+    // Vercel then keeps the previous deployment live, which is the safe outcome.
+    const problem = supabaseUrlProblem();
+    if (problem) throw new CmsError("unavailable", `NEXT_PUBLIC_SUPABASE_URL is misconfigured: ${problem}.`);
   }
   const repo = mode === "supabase" ? createSupabaseRepository(createPublicSupabase()) : createLocalRepository();
   const [cmsProjects, cmsCategories] = await Promise.all([

@@ -3,7 +3,8 @@ import type { NextConfig } from "next";
 /** Supabase Storage host, derived from the project URL so uploaded media can be optimised by next/image. */
 const supabaseHost = (() => {
   try {
-    return process.env.NEXT_PUBLIC_SUPABASE_URL ? new URL(process.env.NEXT_PUBLIC_SUPABASE_URL).hostname : null;
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim();
+    return url ? new URL(url).hostname : null;
   } catch {
     return null;
   }

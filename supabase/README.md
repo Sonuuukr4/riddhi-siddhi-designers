@@ -9,7 +9,9 @@ content and `/admin` shows these instructions.
 
 1. Create a project at <https://supabase.com> (region: Mumbai, `ap-south-1`, is
    closest to Delhi).
-2. **Project Settings → API**: copy the *Project URL* and the *anon public* key.
+2. Copy the *Project URL* (**Project Settings → Data API**, or the **Connect** button) and the
+   **Publishable key** `sb_publishable_…` (**Project Settings → API Keys**). The legacy *anon*
+   key also works. Never use the *secret* / *service_role* key.
 
 ## 2. Environment variables
 
@@ -18,13 +20,16 @@ Settings → Environment Variables):
 
 ```bash
 NEXT_PUBLIC_SUPABASE_URL=https://<project-ref>.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=<anon public key>
+NEXT_PUBLIC_SUPABASE_ANON_KEY=<publishable key (sb_publishable_…) or legacy anon key>
 NEXT_PUBLIC_SITE_URL=https://<your-domain>
 ```
 
 The **service role key is never needed** and must never be added to this
 project. All admin operations run as the signed-in admin and are checked by
 row-level security in the database.
+
+> Run the SQL (step 3) and create the admin (step 4) **before** adding these
+> variables to Vercel — once they are set, the live site reads from Supabase.
 
 ## 3. Run the SQL
 

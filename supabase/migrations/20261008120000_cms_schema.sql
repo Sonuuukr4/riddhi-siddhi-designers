@@ -33,6 +33,7 @@ grant execute on function public.is_admin() to anon, authenticated;
 create or replace function public.touch_updated_at()
 returns trigger
 language plpgsql
+set search_path = public
 as $$
 begin
   new.updated_at := now();
@@ -150,6 +151,20 @@ create policy "media public read" on public.project_media
 drop policy if exists "media admin write" on public.project_media;
 create policy "media admin write" on public.project_media
   for all to authenticated using (public.is_admin()) with check (public.is_admin());
+
+-- ─── API role privileges ────────────────────────────────────────────────
+-- Explicit, least-privilege grants so the Data API works even on projects
+-- created with automatic table exposure turned off. Row-level security above
+-- still decides which rows each role can see or change. Only privileges on
+-- this script's own tables are adjusted; no data is touched.
+grant usage on schema public to anon, authenticated;
+grant select on public.categories, public.projects, public.project_media to anon, authenticated;
+grant insert, update, delete on public.categories, public.projects, public.project_media to authenticated;
+grant select on public.admins to authenticated;
+revoke insert, update, delete, truncate on public.categories, public.projects, public.project_media from anon;
+revoke truncate on public.categories, public.projects, public.project_media from authenticated;
+revoke all on public.admins from anon;
+revoke insert, update, delete, truncate on public.admins from authenticated;
 
 -- ─── Transactional admin functions ──────────────────────────────────────
 -- Saves a project and replaces its media list in one transaction.

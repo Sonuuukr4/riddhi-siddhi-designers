@@ -1,5 +1,6 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
+import { SUPABASE_ANON_KEY, SUPABASE_URL } from "@/lib/cms/env";
 
 /**
  * Runs before every /admin request:
@@ -14,8 +15,8 @@ export async function proxy(request: NextRequest) {
   const isLogin = request.nextUrl.pathname === "/admin/login";
   const toLogin = () => NextResponse.redirect(new URL("/admin/login", request.url));
 
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  const url = SUPABASE_URL;
+  const key = SUPABASE_ANON_KEY;
 
   if (url && key) {
     let response = NextResponse.next({ request });

@@ -77,7 +77,7 @@ export function PortfolioCard({
             <p className="label mt-2 text-concrete">{facts}</p>
           </div>
           <span className="label hidden text-right text-concrete sm:block">
-            {project.placeholder ? "Demo entry" : (project.status ?? "")}
+            {project.status ?? ""}
           </span>
         </div>
       </TransitionLink>

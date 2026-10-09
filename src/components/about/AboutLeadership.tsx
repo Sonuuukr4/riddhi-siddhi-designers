@@ -105,13 +105,6 @@ export function AboutLeadership() {
 
         {/* Biography */}
         <div className="col-span-12 md:col-span-5 md:col-start-8 md:row-start-2 md:self-end">
-          {/* Shown until the studio approves the text — set leader.draft to false in src/content/about.ts. */}
-          {leader.draft && site.showPlaceholderNotices && (
-            <p className="label mb-6 inline-flex items-center gap-2 border border-dashed border-terra/60 px-2.5 py-1.5 text-terra">
-              <span aria-hidden className="size-1.5 rounded-full bg-terra" />
-              Draft biography — client approval required
-            </p>
-          )}
           {leader.biography.map((p, i) => (
             <FadeIn key={i} delay={i * 0.08} className={i === 0 ? undefined : "mt-5"}>
               <p className={i === 0 ? "font-serif text-lede text-pretty" : "max-w-[34rem] text-pretty text-concrete"}>

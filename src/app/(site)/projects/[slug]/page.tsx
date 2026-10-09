@@ -54,7 +54,9 @@ export default async function ProjectPage({ params }: Params) {
   const { project, number, total, previous, next, previousNumber, nextNumber } = data;
 
   const hasApproach = project.approach.length > 0 || (project.approachText?.length ?? 0) > 0;
-  const hasDrawings = project.drawings.length > 0;
+  // Only sheets with a supplied drawing are shown — never an empty frame.
+  const drawings = project.drawings.filter((d) => d.image);
+  const hasDrawings = drawings.length > 0;
   const hasVisuals = project.visualizations.length > 0 || project.materials.length > 0;
 
   // Number only the sections this project actually has, e.g. "02 / 04".
@@ -78,15 +80,6 @@ export default async function ProjectPage({ params }: Params) {
         />
       )}
       <ProjectHero project={project} number={number} total={total} />
-
-      {project.placeholder && site.showPlaceholderNotices && (
-        <div className="frame bg-paper pt-6">
-          <p className="label border border-dashed border-ink/30 px-3 py-2 text-concrete">
-            [ Placeholder ] This entry demonstrates the project template. Imagery is representative stock photography
-            and will be replaced with the studio’s own documentation.
-          </p>
-        </div>
-      )}
 
       {/* Overview */}
       <section data-theme="light" className="bg-paper pb-24 pt-16 text-ink md:pb-36 md:pt-24">
@@ -172,7 +165,7 @@ export default async function ProjectPage({ params }: Params) {
       {/* Drawings */}
       {hasDrawings && (
         <section data-theme="light" aria-labelledby="drawings-heading" className="bg-paper-deep py-20 text-ink md:py-32">
-          {head("drawings", "Architectural drawings", `${pad(project.drawings.length)} sheets`)}
+          {head("drawings", "Architectural drawings", `${pad(drawings.length)} sheets`)}
           <div className="frame mt-12 flex items-end justify-between gap-6 md:mt-16">
             <h2 id="drawings-heading" className="text-headline font-medium uppercase condensed">
               Drawings
@@ -180,7 +173,7 @@ export default async function ProjectPage({ params }: Params) {
             <p className="label hidden text-concrete md:block">Drag to browse →</p>
           </div>
           <HorizontalStrip label="Drawing sheets" className="mt-10">
-            {project.drawings.map((d) => (
+            {drawings.map((d) => (
               <DrawingPlate
                 key={d.sheet}
                 drawing={d}

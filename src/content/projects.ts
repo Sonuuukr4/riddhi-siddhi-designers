@@ -36,7 +36,6 @@ export const projects: Project[] = [
     summary: "Homes shaped around light, privacy and the rhythm of a family’s day.",
     description: [
       "A residential commission begins with how a household actually lives — where mornings are spent, where people gather, and where they withdraw.",
-      "This entry is a template for a residential project. Replace this text with the project’s story: the site, the brief, and the single idea that organises the house.",
     ],
     approach: [
       {
@@ -79,7 +78,6 @@ export const projects: Project[] = [
     summary: "Workplaces planned around focus, collaboration and arrival.",
     description: [
       "A workplace is a daily ritual for the people inside it. Its plan should make concentration easy, conversation natural and arrival memorable.",
-      "This entry is a template for a corporate or commercial project. Replace it with the real brief, the organisation’s way of working and the spatial response.",
     ],
     approach: [
       { title: "Zoning", text: "Quiet, collaborative and social settings arranged as a legible sequence." },
@@ -117,7 +115,6 @@ export const projects: Project[] = [
     summary: "Places of welcome, where atmosphere is designed as carefully as function.",
     description: [
       "In hospitality, the first impression is spatial — the volume of a room, the warmth of its light, the weight of a door handle.",
-      "This entry is a template for a hotel, restaurant or lounge. Replace it with the project narrative, operator brief and the atmosphere the design sets out to create.",
     ],
     approach: [
       { title: "Arrival", text: "A choreographed sequence from street to table or room." },
@@ -156,7 +153,6 @@ export const projects: Project[] = [
     summary: "Rooms resolved to the detail — layout, material, light and the objects within.",
     description: [
       "An interior is experienced at arm’s length. Proportion, light and texture matter as much as the plan.",
-      "This entry is a template for an interior project. Replace it with the real narrative — what existed, what was asked for, and how the space was transformed.",
     ],
     approach: [
       { title: "Light", text: "Natural light protected and drawn deeper into the room." },
@@ -195,7 +191,6 @@ export const projects: Project[] = [
     summary: "Retail environments tuned to the product — circulation, display and light.",
     description: [
       "A shop is a stage for its product. The plan sets the pace of browsing; light and material set the tone of the brand.",
-      "This entry is a template for a retail project. Replace it with the brand, the product and how the space guides a visitor through it.",
     ],
     approach: [
       { title: "Sequence", text: "A route that reveals the collection gradually." },
@@ -231,7 +226,6 @@ export const projects: Project[] = [
     summary: "Seeing a space before it is built — form, light and material, tested in three dimensions.",
     description: [
       "Visualization turns drawings into experience. Massing, daylight and material can be judged by eye, long before construction begins.",
-      "This entry is a template for a visualization project. Replace it with the studio’s own renders, walkthrough stills and the decisions they informed.",
     ],
     approach: [
       { title: "Massing", text: "Early volumetric studies to test scale and placement." },

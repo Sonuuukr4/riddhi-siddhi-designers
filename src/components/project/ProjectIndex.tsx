@@ -7,7 +7,7 @@ import { PlaceholderNote } from "@/components/ui/ParallaxImage";
 import { TransitionLink } from "@/components/ui/TransitionLink";
 import { useSiteProjects } from "@/components/providers/SiteDataProvider";
 import { ease } from "@/lib/motion";
-import { cn, orDash, pad } from "@/lib/utils";
+import { cn, pad } from "@/lib/utils";
 
 /**
  * Editorial index of all projects. Hovering (or focusing) a row previews its
@@ -59,7 +59,7 @@ export function ProjectIndex({ onNavigate, tone = "light" }: { onNavigate?: () =
                       {p.category}
                     </span>
                     <span className={cn("label mt-1 block", muted)}>
-                      {p.typology} · {orDash(p.location)}
+                      {[p.typology, p.location].filter(Boolean).join(" · ")}
                     </span>
                   </span>
                 </span>
@@ -103,7 +103,7 @@ export function ProjectIndex({ onNavigate, tone = "light" }: { onNavigate?: () =
             <span>
               Fig. {pad(projects.indexOf(current) + 1)} — {current.category}
             </span>
-            <span>{current.placeholder ? "Placeholder" : orDash(current.status)}</span>
+            <span>{current.status ?? ""}</span>
           </div>
         </div>
       </div>

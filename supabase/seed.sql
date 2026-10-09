@@ -29,9 +29,7 @@ insert into public.projects (
 )
 select 'Residence', 'residential', c.id, null, null, null, null,
   'Homes shaped around light, privacy and the rhythm of a family’s day.',
-  'A residential commission begins with how a household actually lives — where mornings are spent, where people gather, and where they withdraw.
-
-This entry is a template for a residential project. Replace this text with the project’s story: the site, the brief, and the single idea that organises the house.',
+  'A residential commission begins with how a household actually lives — where mornings are spent, where people gather, and where they withdraw.',
   'Orientation — Rooms placed to receive the right light at the right hour, and shaded from the harshest.
 
 Threshold — A considered sequence from street to home — gate, court, door, room.
@@ -64,9 +62,7 @@ insert into public.projects (
 )
 select 'Workplace', 'commercial', c.id, null, null, null, null,
   'Workplaces planned around focus, collaboration and arrival.',
-  'A workplace is a daily ritual for the people inside it. Its plan should make concentration easy, conversation natural and arrival memorable.
-
-This entry is a template for a corporate or commercial project. Replace it with the real brief, the organisation’s way of working and the spatial response.',
+  'A workplace is a daily ritual for the people inside it. Its plan should make concentration easy, conversation natural and arrival memorable.',
   'Zoning — Quiet, collaborative and social settings arranged as a legible sequence.
 
 Daylight — Work placed along the light; support spaces gathered at the core.
@@ -97,9 +93,7 @@ insert into public.projects (
 )
 select 'Hospitality', 'hospitality', c.id, null, null, null, null,
   'Places of welcome, where atmosphere is designed as carefully as function.',
-  'In hospitality, the first impression is spatial — the volume of a room, the warmth of its light, the weight of a door handle.
-
-This entry is a template for a hotel, restaurant or lounge. Replace it with the project narrative, operator brief and the atmosphere the design sets out to create.',
+  'In hospitality, the first impression is spatial — the volume of a room, the warmth of its light, the weight of a door handle.',
   'Arrival — A choreographed sequence from street to table or room.
 
 Atmosphere — Light designed in layers, so the room changes from day to night.
@@ -131,9 +125,7 @@ insert into public.projects (
 )
 select 'Interior', 'interior', c.id, null, null, null, null,
   'Rooms resolved to the detail — layout, material, light and the objects within.',
-  'An interior is experienced at arm’s length. Proportion, light and texture matter as much as the plan.
-
-This entry is a template for an interior project. Replace it with the real narrative — what existed, what was asked for, and how the space was transformed.',
+  'An interior is experienced at arm’s length. Proportion, light and texture matter as much as the plan.',
   'Light — Natural light protected and drawn deeper into the room.
 
 Joinery — Storage and furniture built in, so the room stays calm.
@@ -165,9 +157,7 @@ insert into public.projects (
 )
 select 'Retail', 'retail', c.id, null, null, null, null,
   'Retail environments tuned to the product — circulation, display and light.',
-  'A shop is a stage for its product. The plan sets the pace of browsing; light and material set the tone of the brand.
-
-This entry is a template for a retail project. Replace it with the brand, the product and how the space guides a visitor through it.',
+  'A shop is a stage for its product. The plan sets the pace of browsing; light and material set the tone of the brand.',
   'Sequence — A route that reveals the collection gradually.
 
 Display — Fixtures designed as architecture, not furniture.
@@ -197,9 +187,7 @@ insert into public.projects (
 )
 select 'Visualization', 'visualization', c.id, null, null, null, null,
   'Seeing a space before it is built — form, light and material, tested in three dimensions.',
-  'Visualization turns drawings into experience. Massing, daylight and material can be judged by eye, long before construction begins.
-
-This entry is a template for a visualization project. Replace it with the studio’s own renders, walkthrough stills and the decisions they informed.',
+  'Visualization turns drawings into experience. Massing, daylight and material can be judged by eye, long before construction begins.',
   'Massing — Early volumetric studies to test scale and placement.
 
 Daylight — Light studied through the day and across the seasons.

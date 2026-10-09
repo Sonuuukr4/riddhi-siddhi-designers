@@ -16,6 +16,8 @@ const paragraphs = (text: string | null) =>
     .map((p) => p.replace(/\s*\n\s*/g, " ").trim())
     .filter(Boolean);
 
+const TEMPLATE_NOTE = /^This entry is a template/;
+
 const firstSentence = (text: string) => {
   const m = text.match(/^(.{20,220}?[.!?])(\s|$)/);
   return m ? m[1] : text.slice(0, 180);
@@ -66,7 +68,9 @@ export function toPublicProject(p: CmsProject): Project {
 
   const visualizations = p.media.filter((m) => m.kind === "visualization").map((m, i) => asset(m, i + 1));
 
-  const description = paragraphs(p.description);
+  // The seeded demo entries carry an editing note ("This entry is a template… Replace it…") meant
+  // for the admin, not for visitors. It is dropped here for demo entries only; real projects are untouched.
+  const description = paragraphs(p.description).filter((d) => !(p.isPlaceholder && TEMPLATE_NOTE.test(d)));
   const approachParas = paragraphs(p.designApproach);
   // "Title — text" paragraphs become the structured three-column approach.
   const structured = approachParas.map((a) => a.match(/^([^—]{2,40}) — (.+)$/));

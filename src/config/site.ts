@@ -10,15 +10,15 @@ const PHONE_E164 = "+919811763839";
 const WHATSAPP_NUMBER = "919811763839"; // international format, digits only — no "+" or spaces
 
 /**
- * Official social profiles.
+ * Official social profiles — the single source for every social link on the site.
  *
- * ⚠ Not yet supplied by the studio. Paste the full profile URL when available,
- * e.g. "https://www.instagram.com/<handle>/". While a value is `null`, the
- * button is hidden on the production site and shown as "link pending" in
- * development, so a broken link is never published.
+ * Instagram: supplied by the studio. Facebook: not yet supplied — paste the full
+ * profile URL when available. While a value is `null`, the button is hidden on
+ * the production site and shown as "link pending" in development, so a broken
+ * link is never published.
  */
 export const SOCIAL_LINKS: { instagram: string | null; facebook: string | null } = {
-  instagram: null,
+  instagram: "https://www.instagram.com/riddhisiddhidesigners3",
   facebook: null,
 };
 

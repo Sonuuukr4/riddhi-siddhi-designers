@@ -25,6 +25,8 @@ export function localBusinessJsonLd() {
       addressCountry: site.address.country,
     },
     areaServed: { "@type": "City", name: "Delhi" },
+    // Official profiles supplied by the studio; unconfigured ones are omitted.
+    sameAs: Object.values(site.social).filter((url): url is string => Boolean(url)),
     knowsAbout: expertise.map((e) => e.title),
     hasOfferCatalog: {
       "@type": "OfferCatalog",

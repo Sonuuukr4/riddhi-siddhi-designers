@@ -56,7 +56,7 @@ function socialAction(
     value: href ? profileName(href, key) : "Link pending",
     href,
     external: true,
-    ariaLabel: `${site.name} on ${label} (opens in a new tab)`,
+    ariaLabel: `Follow ${site.name} on ${label} (opens in a new tab)`,
     Glyph,
   };
 }

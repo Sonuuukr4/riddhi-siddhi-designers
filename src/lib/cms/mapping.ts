@@ -16,7 +16,7 @@ const paragraphs = (text: string | null) =>
     .map((p) => p.replace(/\s*\n\s*/g, " ").trim())
     .filter(Boolean);
 
-const TEMPLATE_NOTE = /^This entry is a template/;
+const TEMPLATE_NOTE = /^This entry is a template\b/;
 
 const firstSentence = (text: string) => {
   const m = text.match(/^(.{20,220}?[.!?])(\s|$)/);

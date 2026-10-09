@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { RegMark, SectionHead } from "@/components/ui/Annotations";
 import { ParallaxImage } from "@/components/ui/ParallaxImage";
 import { FadeIn, RevealLines } from "@/components/ui/Reveal";
@@ -35,23 +36,37 @@ export function AboutLeadership() {
             <span aria-hidden className="h-px w-8 bg-terra" />
             {leader.role}
           </FadeIn>
-          <h2
-            id="leadership-title"
-            className="mt-5 text-display font-medium uppercase leading-[0.84] condensed md:mt-8"
-          >
-            <RevealLines
-              lines={[
-                first,
-                ...(rest.length
-                  ? [
-                      <span key="rest" className="font-serif font-normal normal-case italic tracking-[-0.01em]">
-                        {rest.join(" ")}
-                      </span>,
-                    ]
-                  : []),
-              ]}
-            />
-          </h2>
+          {/* Sized in the heading's own em, so the signature scales with the name at every breakpoint. */}
+          <div className="relative mt-5 pb-[0.85em] text-display md:mt-8 md:pb-[0.45em]">
+            <h2 id="leadership-title" className="font-medium uppercase leading-[0.84] condensed">
+              <RevealLines
+                lines={[
+                  first,
+                  ...(rest.length
+                    ? [
+                        <span key="rest" className="font-serif font-normal normal-case italic tracking-[-0.01em]">
+                          {rest.join(" ")}
+                        </span>,
+                      ]
+                    : []),
+                ]}
+              />
+            </h2>
+            {/* Neeraj Ji's own handwritten signature, signed beside the name like a plate in a monograph. */}
+            <FadeIn
+              delay={0.35}
+              className="pointer-events-none absolute left-[0.85em] top-[0.95em] w-[2.6em] md:w-[1.9em]"
+            >
+              <Image
+                src="/images/neeraj-signature.png"
+                alt={`Signature of ${leader.name}`}
+                width={1403}
+                height={870}
+                sizes="(min-width: 768px) 20vw, 40vw"
+                className="h-auto w-full object-contain"
+              />
+            </FadeIn>
+          </div>
         </div>
 
         {/* Portrait */}

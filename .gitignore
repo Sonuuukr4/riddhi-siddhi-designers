@@ -31,3 +31,6 @@ next-env.d.ts
 
 # private client documents (proposal & roadmap) — kept out of the public repo
 /proposal/
+
+# raw client assets (source files for processed images in public/)
+/design/

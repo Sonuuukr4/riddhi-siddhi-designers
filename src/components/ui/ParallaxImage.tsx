@@ -3,7 +3,7 @@
 import { motion, useInView, useScroll, useTransform } from "motion/react";
 import { usePrefersReducedMotion } from "@/hooks/useMediaQuery";
 import { forwardRef, useImperativeHandle, useRef, type ReactNode } from "react";
-import { site } from "@/content/site";
+import { site } from "@/config/site";
 import { imageReveal, inView } from "@/lib/motion";
 import type { ImageAsset } from "@/lib/types";
 import { cn } from "@/lib/utils";

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { site } from "@/content/site";
+import { site } from "@/config/site";
 import { cn } from "@/lib/utils";
 import { Rule } from "./Reveal";
 

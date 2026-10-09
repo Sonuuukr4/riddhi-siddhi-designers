@@ -5,7 +5,7 @@ import { useRef, useState } from "react";
 import { Img } from "@/components/ui/Img";
 import { PlaceholderNote } from "@/components/ui/ParallaxImage";
 import { TransitionLink } from "@/components/ui/TransitionLink";
-import { projects } from "@/content/projects";
+import { useSiteProjects } from "@/components/providers/SiteDataProvider";
 import { ease } from "@/lib/motion";
 import { cn, orDash, pad } from "@/lib/utils";
 
@@ -14,9 +14,13 @@ import { cn, orDash, pad } from "@/lib/utils";
  * image in a fixed frame; on touch screens each row carries a thumbnail.
  */
 export function ProjectIndex({ onNavigate, tone = "light" }: { onNavigate?: () => void; tone?: "light" | "dark" }) {
-  const [active, setActive] = useState(projects[0].slug);
+  const projects = useSiteProjects();
+  const [active, setActive] = useState(projects[0]?.slug ?? "");
   const previewRef = useRef<HTMLDivElement>(null);
   const current = projects.find((p) => p.slug === active) ?? projects[0];
+  if (!current) {
+    return <p className="label text-concrete">New projects are being added to the portfolio.</p>;
+  }
   const muted = tone === "dark" ? "text-paper/60" : "text-concrete";
   const border = tone === "dark" ? "border-paper/15" : "border-ink/15";
 

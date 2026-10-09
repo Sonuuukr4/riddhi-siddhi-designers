@@ -39,7 +39,7 @@ export function ProjectNav({
             {pad(previousNumber)} {previous.title}
           </span>
         </TransitionLink>
-        <TransitionLink href="/projects" transitionLabel="Index of work" className="hidden hover:text-paper md:block">
+        <TransitionLink href="/portfolio" transitionLabel="Index of work" className="hidden hover:text-paper md:block">
           All projects
         </TransitionLink>
       </div>

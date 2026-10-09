@@ -1,5 +1,6 @@
 import { expertise } from "@/content/expertise";
-import { site } from "@/content/site";
+import { site } from "@/config/site";
+import type { Project } from "@/lib/types";
 
 /**
  * LocalBusiness structured data built only from verified facts: name,
@@ -33,5 +34,23 @@ export function localBusinessJsonLd() {
         itemOffered: { "@type": "Service", name: e.title, description: e.description },
       })),
     },
+  };
+}
+
+const absolute = (src: string) => (src.startsWith("http") ? src : `${site.url}${src}`);
+
+/** CreativeWork data for a real (non-placeholder) project — only fields the studio entered. */
+export function projectJsonLd(project: Project) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    name: project.title,
+    description: project.summary || project.description[0] || undefined,
+    genre: project.category,
+    url: `${site.url}/projects/${project.slug}`,
+    image: absolute(project.heroImage.src),
+    ...(project.location ? { locationCreated: { "@type": "Place", name: project.location } } : {}),
+    ...(project.year ? { temporalCoverage: project.year } : {}),
+    creator: { "@type": "Organization", "@id": `${site.url}/#studio`, name: site.name },
   };
 }

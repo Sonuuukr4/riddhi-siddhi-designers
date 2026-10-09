@@ -1,7 +1,26 @@
 /**
- * Business information — the single source of truth for name, address,
- * phone, navigation and SEO defaults. Edit here; every component reads it.
+ * Site configuration — the single source of truth for business details,
+ * contact channels, social links, navigation and SEO defaults.
+ *
+ * Edit values here; every component reads from this file. Nothing below
+ * should be hard-coded anywhere else in the codebase.
  */
+
+const PHONE_E164 = "+919811763839";
+const WHATSAPP_NUMBER = "919811763839"; // international format, digits only — no "+" or spaces
+
+/**
+ * Official social profiles.
+ *
+ * ⚠ Not yet supplied by the studio. Paste the full profile URL when available,
+ * e.g. "https://www.instagram.com/<handle>/". While a value is `null`, the
+ * button is hidden on the production site and shown as "link pending" in
+ * development, so a broken link is never published.
+ */
+export const SOCIAL_LINKS: { instagram: string | null; facebook: string | null } = {
+  instagram: null,
+  facebook: null,
+};
 
 export const site = {
   name: "Riddhi Siddhi Designers",
@@ -9,14 +28,25 @@ export const site = {
   descriptor: "Architecture / Interior Design / Visualization",
   tagline: "Space / Form / Light",
 
-  /** Set NEXT_PUBLIC_SITE_URL in production so canonical URLs, the sitemap and OG tags resolve. */
-  url: (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").replace(/\/$/, ""),
+  /** NEXT_PUBLIC_SITE_URL, or the Vercel production domain (see next.config.ts), so canonical URLs, the sitemap and OG tags resolve. */
+  url: (process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000").replace(/\/$/, ""),
 
   phone: {
     display: "098117 63839",
-    href: "tel:+919811763839",
+    href: `tel:${PHONE_E164}`,
     e164: "+91-98117-63839",
   },
+
+  whatsapp: {
+    number: WHATSAPP_NUMBER,
+    href: `https://wa.me/${WHATSAPP_NUMBER}`,
+    /** Opens the chat with a polite first line the visitor can edit. */
+    hrefWithMessage: `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+      "Hello Riddhi Siddhi Designers, I would like to discuss a project.",
+    )}`,
+  },
+
+  social: SOCIAL_LINKS,
 
   /** No email address has been provided. Leave null until the studio supplies one. */
   email: null as string | null,
@@ -51,10 +81,11 @@ export const site = {
 
   nav: [
     { label: "Projects", href: "/#projects" },
+    { label: "Portfolio", href: "/portfolio" },
     { label: "Expertise", href: "/#expertise" },
     { label: "Studio", href: "/#studio" },
-    { label: "Process", href: "/#process" },
-    { label: "Contact", href: "/#contact" },
+    { label: "About", href: "/about" },
+    { label: "Contact", href: "/contact" },
   ],
 
   seo: {
@@ -65,3 +96,6 @@ export const site = {
 } as const;
 
 export type Site = typeof site;
+
+/** True when a social profile has been configured. */
+export const hasSocial = (key: keyof typeof SOCIAL_LINKS) => Boolean(SOCIAL_LINKS[key]);

@@ -2,7 +2,7 @@
 
 import { motion } from "motion/react";
 import { usePrefersReducedMotion } from "@/hooks/useMediaQuery";
-import { site } from "@/content/site";
+import { site } from "@/config/site";
 import { ease } from "@/lib/motion";
 
 /** Rounded so server and browser trigonometry produce identical markup. */

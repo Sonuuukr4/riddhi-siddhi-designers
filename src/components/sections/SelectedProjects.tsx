@@ -7,17 +7,20 @@ import { SectionHead } from "@/components/ui/Annotations";
 import { ParallaxImage } from "@/components/ui/ParallaxImage";
 import { FadeIn, RevealLines } from "@/components/ui/Reveal";
 import { TransitionLink } from "@/components/ui/TransitionLink";
-import { projects } from "@/content/projects";
 import type { Project } from "@/lib/types";
 import { cn, pad } from "@/lib/utils";
 
 const variants: SpreadVariant[] = ["full", "split", "bleed", "diptych"];
 
-/** 02 — Projects. The heart of the site: four spreads, then the rest of the index. */
-export function SelectedProjects() {
+/**
+ * 02 — Projects. The heart of the site: four spreads, then two further
+ * entries. `projects` arrives featured-first from the CMS (see app/(site)/page.tsx);
+ * `total` is the size of the whole published portfolio.
+ */
+export function SelectedProjects({ projects, total }: { projects: Project[]; total: number }) {
   const { open } = useUI();
   const featured = projects.slice(0, variants.length);
-  const further = projects.slice(variants.length);
+  const further = projects.slice(variants.length, variants.length + 2);
 
   return (
     <section
@@ -28,7 +31,7 @@ export function SelectedProjects() {
       data-section-label="Projects"
       className="relative bg-paper pb-28 pt-20 text-ink md:pb-40 md:pt-28"
     >
-      <SectionHead index={2} label="Projects" meta={`Selected work — ${pad(projects.length)} entries`} />
+      <SectionHead index={2} label="Projects" meta={`Selected work — ${pad(total)} entries`} />
 
       <div className="frame grid-12 mt-14 items-end gap-y-8 md:mt-20">
         <h2 id="projects-title" className="col-span-12 text-display font-medium uppercase condensed md:col-span-8">
@@ -51,7 +54,7 @@ export function SelectedProjects() {
             onClick={() => open("index")}
             className="caps flex items-center gap-2 border-b border-current pb-1"
           >
-            Open index ({pad(projects.length)}) →
+            Open index ({pad(total)}) →
           </button>
         </FadeIn>
       </div>
@@ -67,7 +70,7 @@ export function SelectedProjects() {
           <div className="label mb-8 flex justify-between border-b border-ink/15 pb-3 text-concrete">
             <span>Further entries</span>
             <span>
-              {pad(variants.length + 1)} — {pad(projects.length)}
+              {pad(variants.length + 1)} — {pad(variants.length + further.length)}
             </span>
           </div>
           <div className="grid-12 gap-y-16">
@@ -78,7 +81,7 @@ export function SelectedProjects() {
           <FadeIn className="mt-20 flex flex-wrap items-center justify-between gap-6 border-t border-ink/15 pt-6">
             <p className="font-serif text-title italic">The complete index of work.</p>
             <TransitionLink
-              href="/projects"
+              href="/portfolio"
               transitionLabel="Index of work"
               className="caps group flex items-center gap-3"
             >

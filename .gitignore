@@ -22,3 +22,12 @@ npm-debug.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local preview CMS content and uploads
+/.data/
+
+# allow the documented env template
+!.env.example
+
+# private client documents (proposal & roadmap) — kept out of the public repo
+/proposal/

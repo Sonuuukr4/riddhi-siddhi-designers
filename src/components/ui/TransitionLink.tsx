@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import type { ComponentProps, MouseEvent, RefObject } from "react";
-import { usePageTransition } from "@/components/providers/TransitionProvider";
+import { useOptionalPageTransition } from "@/components/providers/TransitionProvider";
 import type { ImageAsset } from "@/lib/types";
 
 type TransitionLinkProps = Omit<ComponentProps<typeof Link>, "href"> & {
@@ -16,14 +16,15 @@ type TransitionLinkProps = Omit<ComponentProps<typeof Link>, "href"> & {
 
 /** A next/link that routes through the page-transition layer. Modifier clicks behave natively. */
 export function TransitionLink({ href, transitionLabel, imageRef, image, onClick, ...props }: TransitionLinkProps) {
-  const { navigate } = usePageTransition();
+  const transition = useOptionalPageTransition();
 
   const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
     onClick?.(e);
+    if (!transition) return; // outside the public site: plain navigation
     if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
     if (props.target && props.target !== "_self") return;
     e.preventDefault();
-    navigate(href, { label: transitionLabel, fromImage: imageRef?.current, image });
+    transition.navigate(href, { label: transitionLabel, fromImage: imageRef?.current, image });
   };
 
   return <Link href={href} onClick={handleClick} {...props} />;

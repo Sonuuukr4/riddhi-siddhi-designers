@@ -99,6 +99,22 @@ export const img = {
   shadowPalm: stock("1571327352610-1c5484ccc840", "Palm shadows on a warm plaster wall beside a timber shutter"),
   concretePlanes: stock("1579724175242-0204ecac28cb", "Concrete planes and steps in soft directional light"),
 
+  /* — Studio leadership ————————————————— /images/studio/ — supplied by the studio, not placeholders */
+  neerajPortrait: {
+    src: "/images/studio/neeraj-portrait.jpg",
+    alt: "Neeraj Ji seated at his desk in the Riddhi Siddhi Designers studio, architectural drawings in front of him",
+    position: "50% 30%",
+  },
+  neerajStudio: {
+    src: "/images/studio/neeraj-studio.jpg",
+    alt: "Neeraj Ji in the Riddhi Siddhi Designers studio, with an architectural model on the shelves behind",
+    position: "50% 35%",
+  },
+  neerajHeadshot: {
+    src: "/images/studio/neeraj-headshot.jpg",
+    alt: "Portrait of Neeraj Ji, Riddhi Siddhi Designers",
+  },
+
   /* — Studio ——————————————————————————————— /images/studio/ */
   studioDesk: stock("1598368195835-91e67f80c9d7", "A hand drawing a plan at a timber desk"),
   studioModel: stock("1603901622056-0a5bee231395", "Architectural drawings with drafting tools"),

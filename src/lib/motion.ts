@@ -29,7 +29,7 @@ export const transition = {
 
 /** Line slides up from behind its mask. Pair with the `line-mask` utility. */
 export const lineReveal: Variants = {
-  hidden: { y: "105%" },
+  hidden: { y: "125%" },
   visible: (i: number = 0) => ({
     y: "0%",
     transition: { ...transition.reveal, delay: i * 0.08 },

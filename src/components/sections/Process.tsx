@@ -7,7 +7,7 @@ import { useSmoothScroll } from "@/components/providers/SmoothScroll";
 import { RegMark, SectionHead } from "@/components/ui/Annotations";
 import { RevealLines } from "@/components/ui/Reveal";
 import { process } from "@/content/studio";
-import { site } from "@/content/site";
+import { site } from "@/config/site";
 import { ease } from "@/lib/motion";
 import { cn, pad } from "@/lib/utils";
 

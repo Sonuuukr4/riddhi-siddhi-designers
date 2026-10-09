@@ -3,7 +3,7 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useId, useState, type FormEvent, type ReactNode } from "react";
 import { contact } from "@/content/studio";
-import { site } from "@/content/site";
+import { site } from "@/config/site";
 import { validateEnquiry, type EnquiryErrors } from "@/lib/enquiry";
 import { ease } from "@/lib/motion";
 import { cn } from "@/lib/utils";

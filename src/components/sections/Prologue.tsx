@@ -8,7 +8,7 @@ import { ParallaxImage } from "@/components/ui/ParallaxImage";
 import { FadeIn } from "@/components/ui/Reveal";
 import { ScrollWords } from "@/components/ui/ScrollWords";
 import { img } from "@/content/images";
-import { site } from "@/content/site";
+import { site } from "@/config/site";
 import { studio } from "@/content/studio";
 
 /**

@@ -59,7 +59,7 @@ export function ProjectHero({ project, number, total }: { project: Project; numb
           <span className="line-mask">
             <motion.span
               className="block"
-              initial={{ y: "102%" }}
+              initial={{ y: "125%" }}
               animate={{ y: "0%" }}
               transition={{ duration: 1.4, ease: ease.out, delay: 0.35 }}
             >

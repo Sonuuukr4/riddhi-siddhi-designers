@@ -15,7 +15,7 @@ import { usePageTransition } from "@/components/providers/TransitionProvider";
 import { Coordinates } from "@/components/ui/Annotations";
 import { Img } from "@/components/ui/Img";
 import { PlaceholderNote } from "@/components/ui/ParallaxImage";
-import { site } from "@/content/site";
+import { site } from "@/config/site";
 import { hero } from "@/content/studio";
 import { ease } from "@/lib/motion";
 import { pad } from "@/lib/utils";
@@ -166,7 +166,7 @@ export function Hero() {
               <li key={d} className="line-mask">
                 <motion.span
                   className="block"
-                  initial={{ y: "110%" }}
+                  initial={{ y: "125%" }}
                   animate={{ y: "0%" }}
                   transition={{ duration: 1.2, ease: ease.out, delay: 1 + i * 0.08 }}
                 >
@@ -210,7 +210,7 @@ export function Hero() {
                 <span key={word} className="line-mask">
                   <motion.span
                     className={`block ${i === 1 ? "pl-[16.66%]" : ""} ${i === 2 ? "text-paper/90" : ""}`}
-                    initial={{ y: "102%" }}
+                    initial={{ y: "125%" }}
                     animate={{ y: "0%" }}
                     transition={{ duration: 1.5, ease: ease.out, delay: 0.25 + i * 0.12 }}
                   >

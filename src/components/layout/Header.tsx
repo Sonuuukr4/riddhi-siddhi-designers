@@ -2,11 +2,12 @@
 
 import { motion } from "motion/react";
 import { useEffect, useState } from "react";
+import { ContactActions } from "@/components/contact/ContactActions";
 import { useUI } from "@/components/providers/UIProvider";
 import { DelhiClock } from "@/components/ui/Annotations";
 import { TransitionLink } from "@/components/ui/TransitionLink";
-import { projects } from "@/content/projects";
-import { site } from "@/content/site";
+import { useSiteProjects } from "@/components/providers/SiteDataProvider";
+import { site } from "@/config/site";
 import { ease } from "@/lib/motion";
 import { cn, pad } from "@/lib/utils";
 import { Wordmark } from "./Logo";
@@ -17,8 +18,13 @@ type Theme = "light" | "dark";
  * Transparent over the hero, then a quiet solid bar. The header reads the
  * `data-theme` of whichever section sits beneath it, so its colour always
  * inverts correctly over dark and light sections. Hides while scrolling down.
+ *
+ * Desktop fits six links, the index, call / WhatsApp and the clock by
+ * adding detail as the bar widens: link numbers and the index count from xl,
+ * call / WhatsApp labels from 1360px, the Delhi clock from 2xl.
  */
 export function Header() {
+  const projects = useSiteProjects();
   const { panel, open, close } = useUI();
   const [theme, setTheme] = useState<Theme>("dark");
   const [solid, setSolid] = useState(false);
@@ -70,17 +76,17 @@ export function Header() {
       animate={{ y: hidden && !panelOpen ? "-100%" : "0%" }}
       transition={{ duration: 0.6, ease: ease.out }}
     >
-      <div className="frame flex h-[var(--header-h)] items-center justify-between gap-6">
+      <div className="frame flex h-[var(--header-h)] items-center justify-between gap-6 lg:gap-5 xl:gap-6">
         <TransitionLink href="/" aria-label={`${site.name} — home`} transitionLabel="Home" className="shrink-0">
           <Wordmark />
         </TransitionLink>
 
         <nav aria-label="Primary" className="hidden lg:block">
-          <ul className="flex items-center gap-9">
+          <ul className="flex items-center gap-4 xl:gap-6 2xl:gap-9">
             {site.nav.map((item, i) => (
               <li key={item.href}>
                 <TransitionLink href={item.href} className="group relative flex items-start gap-1.5 py-2">
-                  <span className="label text-[0.5625rem] opacity-50">{pad(i + 1)}</span>
+                  <span className="label hidden text-[0.5625rem] opacity-50 xl:inline">{pad(i + 1)}</span>
                   <span className="caps">{item.label}</span>
                   <span className="absolute inset-x-0 bottom-1 h-px origin-right scale-x-0 bg-current transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover:origin-left group-hover:scale-x-100" />
                 </TransitionLink>
@@ -89,7 +95,7 @@ export function Header() {
           </ul>
         </nav>
 
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-6 lg:gap-4 xl:gap-6">
           <button
             type="button"
             onClick={() => (panel === "index" ? close() : open("index"))}
@@ -103,10 +109,13 @@ export function Header() {
               ))}
             </span>
             {panel === "index" ? "Close" : "Index"}
-            <span className="label opacity-50">({pad(projects.length)})</span>
+            <span className="label opacity-50 lg:hidden xl:inline">({pad(projects.length)})</span>
           </button>
 
-          <div className="label hidden flex-col items-end leading-tight opacity-80 xl:flex">
+          <span aria-hidden className="hidden h-3.5 w-px bg-current opacity-25 lg:block" />
+          <ContactActions variant="compact" include={["call", "whatsapp"]} className="hidden lg:flex" />
+
+          <div className="label hidden flex-col items-end leading-tight opacity-80 2xl:flex">
             <span>Delhi / India</span>
             <DelhiClock className="opacity-60" />
           </div>

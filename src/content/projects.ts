@@ -25,6 +25,8 @@ export const projects: Project[] = [
     slug: "residential",
     title: "Residence",
     category: "Residential",
+    categorySlug: "residential",
+    featured: true,
     typology: "Residential Architecture",
     location: null,
     year: null,
@@ -66,6 +68,8 @@ export const projects: Project[] = [
     slug: "commercial",
     title: "Workplace",
     category: "Commercial",
+    categorySlug: "commercial",
+    featured: true,
     typology: "Corporate Space",
     location: null,
     year: null,
@@ -102,6 +106,8 @@ export const projects: Project[] = [
     slug: "hospitality",
     title: "Hospitality",
     category: "Hospitality",
+    categorySlug: "hospitality",
+    featured: true,
     typology: "Hospitality Interior",
     location: null,
     year: null,
@@ -139,6 +145,8 @@ export const projects: Project[] = [
     slug: "interior",
     title: "Interior",
     category: "Interior",
+    categorySlug: "interior",
+    featured: true,
     typology: "Interior Design",
     location: null,
     year: null,
@@ -176,6 +184,8 @@ export const projects: Project[] = [
     slug: "retail",
     title: "Retail",
     category: "Retail",
+    categorySlug: "retail",
+    featured: false,
     typology: "Retail Space",
     location: null,
     year: null,
@@ -210,6 +220,8 @@ export const projects: Project[] = [
     slug: "visualization",
     title: "Visualization",
     category: "Visualization",
+    categorySlug: "visualization",
+    featured: false,
     typology: "3D Visualization",
     location: null,
     year: null,
@@ -237,6 +249,22 @@ export const projects: Project[] = [
     materials: [],
     placeholder: true,
   },
+];
+
+/**
+ * Starting category list, mirrored by the database seed. Once the CMS is
+ * connected, categories are managed in the admin panel instead.
+ */
+export const staticCategories = [
+  { slug: "residential", name: "Residential" },
+  { slug: "commercial", name: "Commercial" },
+  { slug: "interior", name: "Interior" },
+  { slug: "retail", name: "Retail" },
+  { slug: "hospitality", name: "Hospitality" },
+  { slug: "warehouse", name: "Warehouse" },
+  { slug: "corporate", name: "Corporate" },
+  { slug: "visualization", name: "Visualization" },
+  { slug: "other", name: "Other" },
 ];
 
 export const getProject = (slug: string) => projects.find((p) => p.slug === slug);

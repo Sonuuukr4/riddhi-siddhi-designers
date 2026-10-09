@@ -13,7 +13,7 @@ export default function NotFound() {
           <TransitionLink href="/" className="caps border-b border-paper pb-1">
             Return to the studio →
           </TransitionLink>
-          <TransitionLink href="/projects" className="caps border-b border-paper/40 pb-1 text-paper/70">
+          <TransitionLink href="/portfolio" className="caps border-b border-paper/40 pb-1 text-paper/70">
             Index of work →
           </TransitionLink>
         </div>

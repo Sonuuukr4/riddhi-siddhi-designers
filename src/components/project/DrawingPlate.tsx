@@ -1,5 +1,5 @@
 import { Img } from "@/components/ui/Img";
-import { site } from "@/content/site";
+import { site } from "@/config/site";
 import type { Drawing } from "@/lib/types";
 import { cn } from "@/lib/utils";
 

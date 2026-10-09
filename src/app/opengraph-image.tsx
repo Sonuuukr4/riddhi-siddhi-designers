@@ -1,5 +1,5 @@
 import { ImageResponse } from "next/og";
-import { site } from "@/content/site";
+import { site } from "@/config/site";
 
 export const alt = `${site.name} — architecture and interior design studio, New Delhi`;
 export const size = { width: 1200, height: 630 };

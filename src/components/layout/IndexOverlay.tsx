@@ -5,12 +5,13 @@ import { useEffect, useRef } from "react";
 import { ProjectIndex } from "@/components/project/ProjectIndex";
 import { useUI } from "@/components/providers/UIProvider";
 import { TransitionLink } from "@/components/ui/TransitionLink";
-import { projects } from "@/content/projects";
+import { useSiteProjects } from "@/components/providers/SiteDataProvider";
 import { ease } from "@/lib/motion";
 import { pad } from "@/lib/utils";
 
 /** The INDEX panel: a contents page for the portfolio, opened from anywhere. */
 export function IndexOverlay() {
+  const projects = useSiteProjects();
   const { panel, close } = useUI();
   const isOpen = panel === "index";
   const panelRef = useRef<HTMLDivElement>(null);
@@ -54,7 +55,7 @@ export function IndexOverlay() {
                   Close ✕
                 </button>
                 <TransitionLink
-                  href="/projects"
+                  href="/portfolio"
                   onClick={close}
                   transitionLabel="Index of work"
                   className="caps hidden py-2 text-concrete underline-offset-4 hover:underline sm:block"

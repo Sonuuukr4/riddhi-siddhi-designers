@@ -142,12 +142,13 @@
   font-variation-settings: "wdth" 118;
 }
 
-/* Mask for line-reveal animations: hides the line until it slides in. */
+/* Mask for line-reveal animations: hides the line until it slides in.
+   The extra bottom padding keeps descenders (g, p, y) unclipped at tight leading. */
 @utility line-mask {
   display: block;
   overflow: clip;
-  padding-bottom: 0.06em;
-  margin-bottom: -0.06em;
+  padding-bottom: 0.18em;
+  margin-bottom: -0.18em;
 }
 
 /* Unified photographic tone — subtly desaturated so mixed sources sit together. */

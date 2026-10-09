@@ -41,12 +41,28 @@ export type Material = {
   image?: ImageAsset;
 };
 
-export type ProjectCategory = "Residential" | "Commercial" | "Interior" | "Retail" | "Hospitality" | "Visualization";
+/** Category display name, e.g. "Residential". Categories are managed in the admin panel. */
+export type ProjectCategory = string;
+
+export type ProjectVideo = {
+  /** "file" = an uploaded MP4/WebM; "youtube" / "vimeo" = an embedded external player. */
+  kind: "file" | "youtube" | "vimeo";
+  /** Playable URL for files; the canonical watch URL for YouTube/Vimeo. */
+  url: string;
+  /** Embed URL for YouTube/Vimeo (privacy-enhanced where available). */
+  embedUrl?: string;
+  /** Still frame shown before playback. Falls back to the project cover. */
+  poster?: string;
+};
 
 export type Project = {
+  /** Database id for CMS projects; undefined for static content. */
+  id?: string;
   slug: string;
   title: string;
   category: ProjectCategory;
+  /** URL-safe category key used by portfolio filters, e.g. "residential". */
+  categorySlug: string;
   /** Longer category descriptor, e.g. "Residential Architecture". */
   typology: string;
   /** null renders as an em dash — never invent a location. */
@@ -58,14 +74,28 @@ export type Project = {
   /** One line used on cards and in the index. */
   summary: string;
   description: string[];
+  /** Structured approach points (static content). */
   approach: { title: string; text: string }[];
+  /** Free-text design approach paragraphs (CMS content). */
+  approachText?: string[];
   heroImage: ImageAsset;
   gallery: GalleryItem[];
   drawings: Drawing[];
   visualizations: ImageAsset[];
   materials: Material[];
+  video?: ProjectVideo;
+  /** Shown in the home page "Selected work" spreads. */
+  featured?: boolean;
   /** Marks the whole entry as a structural placeholder awaiting real content. */
   placeholder: boolean;
+};
+
+/** A portfolio category as shown in public filters. */
+export type PortfolioCategory = {
+  slug: string;
+  name: string;
+  /** Number of published projects in the category. */
+  count: number;
 };
 
 export type Expertise = {

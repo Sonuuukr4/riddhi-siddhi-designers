@@ -1,19 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import { Archivo, IBM_Plex_Mono, Instrument_Serif } from "next/font/google";
-import { Cursor } from "@/components/layout/Cursor";
-import { Footer } from "@/components/layout/Footer";
-import { GridOverlay } from "@/components/layout/GridOverlay";
-import { Header } from "@/components/layout/Header";
-import { IndexOverlay } from "@/components/layout/IndexOverlay";
-import { MobileMenu } from "@/components/layout/MobileMenu";
-import { SectionRail } from "@/components/layout/SectionRail";
-import { MotionProvider } from "@/components/providers/MotionProvider";
-import { SmoothScrollProvider } from "@/components/providers/SmoothScroll";
-import { TransitionProvider } from "@/components/providers/TransitionProvider";
-import { UIProvider } from "@/components/providers/UIProvider";
-import { site } from "@/content/site";
-import { localBusinessJsonLd } from "@/lib/seo";
+import { site } from "@/config/site";
 import "./globals.css";
 
 const archivo = Archivo({
@@ -81,41 +69,18 @@ export const viewport: Viewport = {
   themeColor: "#0f0f0e",
   width: "device-width",
   initialScale: 1,
+  // Lets the mobile action bar and menu pad themselves above the iOS home indicator.
+  viewportFit: "cover",
 };
 
+/**
+ * Document shell shared by the public site and the admin panel. Each area
+ * adds its own chrome: src/app/(site)/layout.tsx and src/app/admin/layout.tsx.
+ */
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
     <html lang="en-IN" className={`${archivo.variable} ${serif.variable} ${mono.variable}`}>
-      <body>
-        <a
-          href="#main"
-          className="caps fixed left-4 top-4 z-[100] -translate-y-24 bg-ink px-4 py-3 text-paper transition-transform focus:translate-y-0"
-        >
-          Skip to content
-        </a>
-        <MotionProvider>
-          <SmoothScrollProvider>
-            <TransitionProvider>
-              <UIProvider>
-                <Header />
-                <MobileMenu />
-                <IndexOverlay />
-                <main id="main" tabIndex={-1} className="outline-none" data-inert-with-panel>
-                  {children}
-                </main>
-                <Footer />
-                <GridOverlay />
-                <SectionRail />
-                <Cursor />
-              </UIProvider>
-            </TransitionProvider>
-          </SmoothScrollProvider>
-        </MotionProvider>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd()) }}
-        />
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

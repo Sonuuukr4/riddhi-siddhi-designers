@@ -293,3 +293,8 @@ export function usePageTransition() {
   if (!ctx) throw new Error("usePageTransition must be used inside TransitionProvider");
   return ctx;
 }
+
+/** Same as usePageTransition, but null outside the public site (e.g. the 404 page). */
+export function useOptionalPageTransition() {
+  return useContext(TransitionContext);
+}

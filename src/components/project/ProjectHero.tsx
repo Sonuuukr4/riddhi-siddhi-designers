@@ -38,13 +38,13 @@ export function ProjectHero({ project, number, total }: { project: Project; numb
           className="tone object-cover"
           onLoad={markHeroReady}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-ink/30 via-transparent to-ink/60" />
+        <div className="absolute inset-0 bg-gradient-to-b from-ink/45 via-ink/5 to-ink/70" />
         <motion.div className="absolute inset-0 bg-ink" style={{ opacity: dim }} />
       </motion.div>
 
       <div className="frame relative flex h-full flex-col justify-end pb-8 md:pb-12">
         <motion.p
-          className="label flex items-center gap-3 text-paper/75"
+          className="label flex items-center gap-3 text-paper/90"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.5 }}

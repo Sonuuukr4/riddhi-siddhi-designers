@@ -52,8 +52,8 @@ export const site = {
   email: null as string | null,
 
   address: {
-    lines: ["8/12, W Patel Nagar Rd", "Near DAV School, Block 26", "East Patel Nagar", "New Delhi — 110008"],
-    short: ["8/12, W Patel Nagar Rd", "East Patel Nagar", "New Delhi — 110008"],
+    lines: ["8/12, W Patel Nagar\u00a0Rd", "Near DAV School, Block 26", "East Patel Nagar", "New Delhi — 110008"],
+    short: ["8/12, W Patel Nagar\u00a0Rd", "East Patel Nagar", "New Delhi — 110008"],
     street: "8/12, W Patel Nagar Rd, Near DAV School, Block 26, East Patel Nagar, Patel Nagar",
     locality: "New Delhi",
     region: "Delhi",

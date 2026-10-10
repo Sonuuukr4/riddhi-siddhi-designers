@@ -35,7 +35,7 @@ export function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Get directions to the studio (opens Google Maps in a new tab)"
-              className="mt-1 self-start opacity-80 transition-opacity hover:opacity-100 focus-visible:opacity-100"
+              className="mt-1 self-start py-1.5 opacity-80 transition-opacity hover:opacity-100 focus-visible:opacity-100 lg:py-0"
             >
               Directions ↗
             </a>
@@ -58,7 +58,7 @@ export function Footer() {
               <li className="text-paper/60">Index</li>
               {site.nav.map((l) => (
                 <li key={l.href}>
-                  <TransitionLink href={l.href} className="hover:text-paper">
+                  <TransitionLink href={l.href} className="inline-block py-1.5 hover:text-paper lg:py-0">
                     {l.label}
                   </TransitionLink>
                 </li>

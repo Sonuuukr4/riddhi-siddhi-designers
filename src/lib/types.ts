@@ -21,7 +21,7 @@ export type GalleryItem = ImageAsset & {
   layout: GalleryLayout;
   caption?: string;
   /** Second image, used when layout is "pair". */
-  pairWith?: ImageAsset;
+  pairWith?: ImageAsset & { caption?: string };
 };
 
 export type Drawing = {

@@ -121,7 +121,8 @@ export function Expertise() {
                   <div className="min-w-0">
                     <h3
                       className={cn(
-                        "text-headline font-medium uppercase leading-[0.9] transition-colors duration-700 condensed",
+                        // Scales with the screen on phones so the longest word (ARCHITECTURE) clears the tag column.
+                        "text-[clamp(1.75rem,8.2vw,2.5rem)] font-medium uppercase leading-[0.9] transition-colors duration-700 condensed sm:text-headline",
                         on ? "text-paper" : "text-paper/30",
                       )}
                     >

@@ -264,7 +264,6 @@ export function Hero() {
       <PlaceholderNote
         asset={current.image}
         placement="right-[var(--gutter)] top-[calc(var(--header-h)+0.5rem)]"
-        className="hidden md:block"
       />
 
       {/* Slide progress */}

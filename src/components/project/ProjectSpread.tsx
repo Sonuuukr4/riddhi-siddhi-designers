@@ -22,7 +22,7 @@ export function ProjectSpread({ project, number, variant }: SpreadProps) {
   const secondary = project.gallery[0] as ImageAsset | undefined;
 
   /** The hero image, clickable, expanding into the project page. */
-  const heroImage = (className: string, sizes: string, strength?: number, imageClassName?: string) => (
+  const heroImage = (className: string, sizes: string, strength?: number, imageClassName?: string, notePlacement?: string) => (
     <TransitionLink
       href={href}
       imageRef={heroRef}
@@ -41,6 +41,7 @@ export function ProjectSpread({ project, number, variant }: SpreadProps) {
         className={className}
         imageClassName={imageClassName}
         strength={strength}
+        notePlacement={notePlacement}
       />
     </TransitionLink>
   );
@@ -127,7 +128,6 @@ export function ProjectSpread({ project, number, variant }: SpreadProps) {
                 asset={secondary}
                 sizes="(min-width: 768px) 25vw, 50vw"
                 strength={0.04}
-                note={false}
                 className="aspect-[4/3]"
               />
             </div>
@@ -140,7 +140,7 @@ export function ProjectSpread({ project, number, variant }: SpreadProps) {
     bleed: (
       <div className="grid-12 relative gap-y-8 pr-[var(--gutter)]">
         <div className="order-1 col-span-12 md:order-none md:col-span-8">
-          {heroImage("aspect-[4/3] md:aspect-[16/11] w-full", "(min-width: 768px) 70vw, 100vw", 0.1, "tone-mute")}
+          {heroImage("aspect-[4/3] md:aspect-[16/11] w-full", "(min-width: 768px) 70vw, 100vw", 0.1, "tone-mute", "top-2 right-2")}
         </div>
         <div className="order-3 col-span-12 flex flex-col gap-8 pl-[var(--gutter)] md:order-none md:col-span-4 md:pl-0">
           <FadeIn className="flex flex-col gap-6">

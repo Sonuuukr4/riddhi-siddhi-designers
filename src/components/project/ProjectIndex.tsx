@@ -56,10 +56,10 @@ export function ProjectIndex({ onNavigate, tone = "light" }: { onNavigate?: () =
                         !isActive && "lg:opacity-55",
                       )}
                     >
-                      {p.category}
+                      {p.title}
                     </span>
                     <span className={cn("label mt-1 block", muted)}>
-                      {[p.typology, p.location].filter(Boolean).join(" · ")}
+                      {[p.typology !== p.title ? p.typology : null, p.location].filter(Boolean).join(" · ")}
                     </span>
                   </span>
                 </span>

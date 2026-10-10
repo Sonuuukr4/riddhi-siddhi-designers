@@ -10,6 +10,8 @@ type RevealLinesProps = {
   as?: ElementType;
   className?: string;
   lineClassName?: string;
+  /** Extra classes for each clipping mask, e.g. room for an italic descender at the left edge. */
+  maskClassName?: string;
   /** Delay before the first line, in seconds. */
   delay?: number;
   /** Animate immediately instead of waiting for the element to enter view. */
@@ -25,6 +27,7 @@ export function RevealLines({
   as: Tag = "div",
   className,
   lineClassName,
+  maskClassName,
   delay = 0,
   immediate,
 }: RevealLinesProps) {
@@ -35,7 +38,7 @@ export function RevealLines({
   return (
     <Tag ref={ref} className={className}>
       {lines.map((line, i) => (
-        <span key={i} className="line-mask">
+        <span key={i} className={cn("line-mask", maskClassName)}>
           <motion.span
             className={cn("block will-change-transform", lineClassName)}
             variants={lineReveal}

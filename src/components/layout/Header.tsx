@@ -64,7 +64,8 @@ export function Header() {
   }, []);
 
   const panelOpen = panel !== null;
-  const dark = panelOpen || theme === "dark";
+  // The menu panel is ink and the index panel is paper: the header takes the colour of whichever is open.
+  const dark = panel === "menu" || (!panelOpen && theme === "dark");
 
   return (
     <motion.header
@@ -72,6 +73,8 @@ export function Header() {
         "fixed inset-x-0 top-0 z-[60] transition-colors duration-500",
         dark ? "text-paper" : "text-ink",
         solid && !panelOpen && (dark ? "bg-ink/80 backdrop-blur-md" : "bg-paper/85 backdrop-blur-md"),
+        // Over the scrolling index list the header needs its own ground to stay legible.
+        panel === "index" && "bg-paper/90 backdrop-blur-md",
       )}
       animate={{ y: hidden && !panelOpen ? "-100%" : "0%" }}
       transition={{ duration: 0.6, ease: ease.out }}

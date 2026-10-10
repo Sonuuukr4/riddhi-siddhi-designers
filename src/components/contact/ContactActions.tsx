@@ -194,8 +194,11 @@ export function ContactActions({
                 {a.label}
               </span>
             );
-            const valueClass =
-              "col-span-2 col-start-2 row-start-2 min-w-0 text-title font-light tabular-nums @2xl:col-span-1 @2xl:col-start-3 @2xl:row-start-1";
+            // Long values (an Instagram handle) step down a size in narrow columns so they never overflow a phone screen.
+            const valueClass = cn(
+              "col-span-2 col-start-2 row-start-2 min-w-0 font-light tabular-nums [overflow-wrap:anywhere] @2xl:col-span-1 @2xl:col-start-3 @2xl:row-start-1",
+              a.value.length > 16 ? "text-lede @md:text-title" : "text-title",
+            );
             return (
               <li key={a.key} className="border-b border-current/15">
                 {isLive(a) ? (
@@ -320,7 +323,7 @@ export function ContactActions({
               {isLive(a) ? (
                 <a
                   {...linkProps(a)}
-                  className="group inline-flex items-center gap-2 opacity-80 transition-opacity hover:opacity-100 focus-visible:opacity-100"
+                  className="group inline-flex items-center gap-2 py-1.5 opacity-80 transition-opacity hover:opacity-100 focus-visible:opacity-100 lg:py-0"
                 >
                   <a.Glyph className="size-3.5" />
                   <span className="tabular-nums">{a.key === "call" ? a.value : a.label}</span>

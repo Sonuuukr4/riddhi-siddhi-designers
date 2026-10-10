@@ -168,7 +168,9 @@ export function Visualization() {
                   i === 0 ? "bg-ink/80 text-paper" : i === 1 ? "bg-paper/85 text-ink" : "bg-ink/70 text-paper",
                 )}
               >
-                {pad(i + 1)} — {stage.label}
+                {pad(i + 1)}
+                {/* Number only on phones, where three labels would collide across the image. */}
+                <span className="hidden sm:inline"> — {stage.label}</span>
               </span>
             </div>
           ))}
@@ -204,11 +206,11 @@ export function Visualization() {
 
         <ol className="mt-6 grid grid-cols-3 gap-[var(--col-gap)] border-t border-paper/15 pt-4">
           {visualization.stages.map((s, i) => (
-            <li key={s.id} className="flex flex-col gap-1">
+            <li key={s.id} className="flex min-w-0 flex-col gap-1">
               <span className="label text-paper/60">
                 {pad(i + 1)} {i < 2 && <span aria-hidden>→</span>}
               </span>
-              <span className="text-lede font-medium uppercase condensed">{s.label}</span>
+              <span className="min-w-0 text-[0.95rem] font-medium uppercase [overflow-wrap:anywhere] condensed sm:text-lede">{s.label}</span>
               <span className="hidden font-serif italic text-paper/60 sm:block">{s.caption}</span>
             </li>
           ))}

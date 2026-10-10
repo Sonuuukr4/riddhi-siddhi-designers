@@ -20,6 +20,8 @@ type ParallaxImageProps = {
   priority?: boolean;
   /** Show the "representative image" note on placeholder assets. */
   note?: boolean;
+  /** Where the note sits, e.g. when a title overlaps the default bottom-right corner. */
+  notePlacement?: string;
   children?: ReactNode;
 };
 
@@ -28,7 +30,7 @@ type ParallaxImageProps = {
  * scroll. The frame (className) sets size/aspect; the image always covers it.
  */
 export const ParallaxImage = forwardRef<HTMLDivElement, ParallaxImageProps>(function ParallaxImage(
-  { asset, sizes, className, imageClassName, strength = 0.08, reveal = true, priority, note = true, children },
+  { asset, sizes, className, imageClassName, strength = 0.08, reveal = true, priority, note = true, notePlacement, children },
   forwardedRef,
 ) {
   const ref = useRef<HTMLDivElement>(null);
@@ -61,7 +63,7 @@ export const ParallaxImage = forwardRef<HTMLDivElement, ParallaxImageProps>(func
           />
         </motion.div>
       </motion.div>
-      {note && <PlaceholderNote asset={asset} />}
+      {note && <PlaceholderNote asset={asset} placement={notePlacement} />}
       {children}
     </div>
   );

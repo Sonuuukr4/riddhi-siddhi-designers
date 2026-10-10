@@ -76,7 +76,7 @@ export function Contact({ standalone = false }: { standalone?: boolean }) {
         <FadeIn className="col-span-12 lg:col-span-3">
           <Subheading className="label text-paper/60">Direct lines</Subheading>
           <p className="mt-3 max-w-[20rem] text-pretty text-paper/70">
-            Speak to the studio directly — a call, or a message on WhatsApp.
+            Speak to the studio directly — a call or a message on WhatsApp — and follow the work on Instagram.
           </p>
         </FadeIn>
         <FadeIn className="col-span-12 lg:col-span-9" delay={0.1}>

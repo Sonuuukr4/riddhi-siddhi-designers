@@ -40,6 +40,7 @@ export function AboutLeadership() {
           <div className="relative mt-5 pb-[0.85em] text-display md:mt-8 md:pb-[0.45em]">
             <h2 id="leadership-title" className="font-medium uppercase leading-[0.84] condensed">
               <RevealLines
+                maskClassName="-ml-[0.15em] pl-[0.15em]"
                 lines={[
                   first,
                   ...(rest.length

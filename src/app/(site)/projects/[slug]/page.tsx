@@ -30,7 +30,9 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const data = await getProjectWithNeighbours(slug);
   if (!data) return {};
   const { project } = data;
-  const title = `${project.title} — ${project.typology}`;
+  // Demo entries are named after their category; avoid titles like "Retail — Retail".
+  const title =
+    project.typology.toLowerCase() === project.title.toLowerCase() ? project.title : `${project.title} — ${project.typology}`;
   const description =
     project.summary || `${project.title}, a ${project.category.toLowerCase()} project by ${site.name}, New Delhi.`;
   return {
@@ -57,6 +59,7 @@ export default async function ProjectPage({ params }: Params) {
   // Only sheets with a supplied drawing are shown — never an empty frame.
   const drawings = project.drawings.filter((d) => d.image);
   const hasDrawings = drawings.length > 0;
+  const hasInfo = Boolean(project.location || project.year || project.status || project.client || project.scope.length);
   const hasVisuals = project.visualizations.length > 0 || project.materials.length > 0;
 
   // Number only the sections this project actually has, e.g. "02 / 04".
@@ -65,7 +68,7 @@ export default async function ProjectPage({ params }: Params) {
     hasApproach && "approach",
     hasDrawings && "drawings",
     hasVisuals && "visuals",
-    "info",
+    hasInfo && "info",
   ].filter(Boolean) as string[];
   const head = (key: string, label: string, meta?: string): ReactNode => (
     <SectionHead index={sections.indexOf(key) + 1} total={sections.length} label={label} meta={meta} />
@@ -203,7 +206,7 @@ export default async function ProjectPage({ params }: Params) {
                     >
                       <ParallaxImage
                         asset={v}
-                        sizes="(min-width: 768px) 55vw, 100vw"
+                        sizes={project.visualizations.length === 1 ? "(min-width: 768px) 95vw, 100vw" : "(min-width: 768px) 50vw, 100vw"}
                         className="aspect-[4/3]"
                         strength={0.05}
                       />
@@ -238,7 +241,8 @@ export default async function ProjectPage({ params }: Params) {
         </section>
       )}
 
-      {/* Project information */}
+      {/* Project information — only when there is more to say than the category */}
+      {hasInfo && (
       <section data-theme="light" aria-labelledby="info-heading" className="bg-paper py-20 text-ink md:py-32">
         {head("info", "Project information")}
         <div className="frame grid-12 mt-12 gap-y-8 md:mt-16">
@@ -258,6 +262,7 @@ export default async function ProjectPage({ params }: Params) {
           </FadeIn>
         </div>
       </section>
+      )}
 
       {total > 1 && (
         <ProjectNav previous={previous} next={next} previousNumber={previousNumber} nextNumber={nextNumber} />

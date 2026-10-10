@@ -78,8 +78,8 @@ export default async function PortfolioPage() {
           </h1>
           <FadeIn className="col-span-12 flex flex-col gap-4 md:col-span-3">
             <p className="text-pretty text-concrete">
-              Homes, workplaces, shops and places of hospitality — each project a complete record of photographs,
-              drawings and, where available, film.
+              Homes, workplaces, shops and places of hospitality — each project presented through its photographs and,
+              where available, drawings and film.
             </p>
             <Coordinates className="text-concrete" />
           </FadeIn>

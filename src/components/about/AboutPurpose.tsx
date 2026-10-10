@@ -62,8 +62,11 @@ export function AboutPurpose() {
                   <h3 className="flex flex-wrap items-center gap-x-4 gap-y-2 text-title leading-none">
                     <span className="font-medium uppercase text-concrete condensed">{p.from}</span>
                     <span className="sr-only"> into </span>
-                    <DrawnArrow />
-                    <span className="font-serif italic">{p.to}</span>
+                    {/* Arrow and result wrap as one unit, so an arrow never points at an empty line end. */}
+                    <span className="flex items-center gap-x-4 whitespace-nowrap">
+                      <DrawnArrow />
+                      <span className="font-serif italic">{p.to}</span>
+                    </span>
                   </h3>
                   <FadeIn className="mt-4 max-w-md text-pretty text-concrete" delay={0.1}>
                     {p.text}

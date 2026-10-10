@@ -46,8 +46,8 @@ export function SelectedProjects({ projects, total }: { projects: Project[]; tot
         </h2>
         <FadeIn className="col-span-12 flex flex-col items-start gap-5 md:col-span-3 md:col-start-10 md:items-end md:text-right">
           <p className="text-concrete">
-            Residential, commercial, hospitality, interior, retail and visualization — each entry structured as a full
-            project record.
+            Residential, commercial, hospitality, interior, retail and visualization — each entry with its own page,
+            gallery and story.
           </p>
           <button
             type="button"

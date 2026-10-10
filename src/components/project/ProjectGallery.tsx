@@ -76,7 +76,8 @@ function GalleryRow({ item, index }: { item: GalleryItem; index: number }) {
             </div>
           )}
           <div className="col-span-12">
-            <Caption index={index} text={item.caption} />
+            {/* One caption for the pair, so neither image loses its title. */}
+            <Caption index={index} text={[item.caption, item.pairWith?.caption].filter(Boolean).join(" / ") || undefined} />
           </div>
         </figure>
       );

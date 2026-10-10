@@ -54,19 +54,20 @@ export function Studio() {
             asset={studio.image}
             sizes="(min-width: 768px) 40vw, 100vw"
             className="aspect-[4/5] w-[82%] md:w-full"
+            notePlacement="bottom-2 left-2"
           />
           <div className="absolute -bottom-12 right-0 w-[44%] shadow-[0_0_0_10px_var(--color-paper)] md:-right-[22%] md:w-[46%]">
             <ParallaxImage
               asset={studio.imageSecondary}
               sizes="(min-width: 768px) 20vw, 45vw"
               strength={0.04}
-              note={false}
               className="aspect-square"
             />
           </div>
         </div>
 
-        <div className="col-span-12 flex flex-col justify-end gap-6 md:col-span-5 md:col-start-8">
+        {/* Extra room on phones: the inset photo hangs below the main image. */}
+        <div className="col-span-12 mt-10 flex flex-col justify-end gap-6 md:col-span-5 md:col-start-8 md:mt-0">
           {studio.about.map((p, i) => (
             <FadeIn key={i} delay={i * 0.1}>
               <p className={i === 0 ? "text-lede text-pretty" : "text-pretty text-concrete"}>{p}</p>
@@ -87,7 +88,7 @@ export function Studio() {
         >
           {disciplines.map((d, i) => (
             <Fragment key={d.id}>
-              <li>
+              <li className="whitespace-nowrap">
                 <button
                   type="button"
                   aria-pressed={active === d.id}
@@ -105,12 +106,13 @@ export function Studio() {
                   </sup>
                   {d.label}
                 </button>
+                {/* The separator belongs to the word before it, so no line can start with a slash. */}
+                {i < disciplines.length - 1 && (
+                  <span aria-hidden className="ml-[0.3em] font-serif font-normal text-stone">
+                    /
+                  </span>
+                )}
               </li>
-              {i < disciplines.length - 1 && (
-                <li aria-hidden className="font-serif font-normal text-stone">
-                  /
-                </li>
-              )}
             </Fragment>
           ))}
         </ul>

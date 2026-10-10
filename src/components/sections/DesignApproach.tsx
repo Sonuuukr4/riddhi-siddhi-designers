@@ -5,6 +5,7 @@ import { usePrefersReducedMotion } from "@/hooks/useMediaQuery";
 import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { SectionHead } from "@/components/ui/Annotations";
 import { Img } from "@/components/ui/Img";
+import { site } from "@/config/site";
 import { FadeIn } from "@/components/ui/Reveal";
 import { principles } from "@/content/studio";
 import { ease } from "@/lib/motion";
@@ -50,6 +51,9 @@ export function DesignApproach() {
         <FadeIn className="col-span-12 self-end text-concrete md:col-span-4 md:col-start-9">
           Six qualities that every brief is measured against — whether the project is a home, a workplace or a
           warehouse.
+          {site.showPlaceholderNotices && principles.some((p) => p.image.placeholder) && (
+            <span className="label mt-3 block opacity-70">Imagery is representative</span>
+          )}
         </FadeIn>
       </div>
 

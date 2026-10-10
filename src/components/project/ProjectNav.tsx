@@ -29,7 +29,7 @@ export function ProjectNav({
         <TransitionLink
           href={`/projects/${previous.slug}`}
           transitionLabel={previous.category}
-          className="group flex items-center gap-3 hover:text-paper"
+          className="group -my-3 flex items-center gap-3 py-3 hover:text-paper"
         >
           <span aria-hidden className="transition-transform duration-500 group-hover:-translate-x-1">
             ←

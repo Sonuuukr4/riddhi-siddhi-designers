@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowDown, ArrowUp, CheckCircle2, ExternalLink, GripVertical, ImagePlus, Star, Trash2 } from "lucide-react";
+import { ArrowDown, ArrowUp, CheckCircle2, ExternalLink, GripVertical, ImagePlus, RefreshCw, Star, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState, useTransition, type ComponentProps } from "react";
@@ -58,7 +58,8 @@ type Draft = {
   media: GalleryItem[];
 };
 
-type Slot = "cover" | "poster" | "video" | "gallery";
+/** Upload targets: single slots, the gallery drop zone, or one existing gallery image being replaced. */
+type Slot = "cover" | "poster" | "video" | "gallery" | `item:${string}`;
 
 const IMAGE_ACCEPT = IMAGE_TYPES.join(",");
 const VIDEO_ACCEPT = VIDEO_TYPES.join(",");
@@ -303,6 +304,24 @@ export function ProjectForm({
     if (!f) return;
     setDraft((d) => ({ ...d, videoFileUrl: f.url, videoFilePath: f.path }));
     clearError("videoUrl");
+  };
+
+  /** Swaps one gallery image for a new file, keeping its caption, description, type and position. */
+  const replaceItem = async (key: string, file: File) => {
+    const f = await runUpload(file, `item:${key}`);
+    if (!f) return;
+    setDraft((d) => {
+      const old = d.media.find((m) => m.key === key);
+      const wasCover = Boolean(old && (old.storagePath ? d.coverPath === old.storagePath : d.coverUrl === old.url));
+      return {
+        ...d,
+        media: d.media.map((m) =>
+          m.key === key ? { ...m, url: f.url, storagePath: f.path, width: f.width, height: f.height } : m,
+        ),
+        ...(wasCover ? { coverUrl: f.url, coverPath: f.path } : {}),
+      };
+    });
+    toast("Image replaced.");
   };
 
   const uploadGallery = async (files: File[]) => {
@@ -747,6 +766,17 @@ export function ProjectForm({
                     >
                       <div className="relative">
                         <Thumb src={m.url} alt={m.alt} className="aspect-[4/3] w-full" />
+                        {(() => {
+                          const replacing = slotUpload(`item:${m.key}`);
+                          if (!replacing) return null;
+                          return replacing.error ? (
+                            <p role="alert" className="absolute inset-x-0 bottom-0 bg-terra/90 px-2 py-1.5 text-[0.75rem] text-bone">
+                              {replacing.error}
+                            </p>
+                          ) : (
+                            <UploadingTile upload={replacing} className="absolute inset-0 rounded-none border-0 bg-bone/90" />
+                          );
+                        })()}
                         <span className="label absolute left-2 top-2 flex items-center gap-1 rounded-[2px] bg-ink/75 px-1.5 py-0.5 text-bone">
                           <GripVertical className="size-3" aria-hidden />
                           {String(i + 1).padStart(2, "0")}
@@ -804,6 +834,25 @@ export function ProjectForm({
                           >
                             <ArrowDown className="size-4" aria-hidden />
                           </IconButton>
+                          <label
+                            htmlFor={`f-replace-${m.key}`}
+                            title={`Replace image ${i + 1}`}
+                            className="flex size-9 cursor-pointer items-center justify-center rounded-[3px] text-ink/55 transition-colors focus-within:outline focus-within:outline-1 hover:bg-ink/5 hover:text-ink"
+                          >
+                            <input
+                              id={`f-replace-${m.key}`}
+                              type="file"
+                              accept={IMAGE_ACCEPT}
+                              aria-label={`Replace image ${i + 1}`}
+                              className="sr-only"
+                              onChange={(e) => {
+                                const file = e.target.files?.[0];
+                                e.target.value = "";
+                                if (file) void replaceItem(m.key, file);
+                              }}
+                            />
+                            <RefreshCw className="size-4" aria-hidden />
+                          </label>
                           <IconButton
                             label={`Use image ${i + 1} as the cover`}
                             disabled={Boolean(draft.coverPath && draft.coverPath === m.storagePath) || draft.coverUrl === m.url}

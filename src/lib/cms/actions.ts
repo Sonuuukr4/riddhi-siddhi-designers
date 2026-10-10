@@ -17,7 +17,7 @@ import { getAdminCms } from "./admin-repo";
 import { CMS_TAG, cmsMode, mediaUrlPrefix } from "./env";
 import { checkUpload, extensionFor } from "./limits";
 import { CmsError, storagePathsOf } from "./repository";
-import type { ActionResult, CmsCategory, UploadTarget } from "./types";
+import type { ActionResult, CmsCategory, CmsProject, UploadTarget, Visibility } from "./types";
 import {
   categoryInputSchema,
   fieldErrors,
@@ -199,6 +199,67 @@ export async function saveProjectAction(
   }
 }
 
+/** A saved project in the shape the editor submits (used by duplicate and quick publish). */
+function rawInputFrom(p: CmsProject) {
+  return {
+    title: p.title,
+    slug: p.slug,
+    categoryId: p.categoryId,
+    location: p.location,
+    year: p.year,
+    clientName: p.clientName,
+    projectStatus: p.projectStatus,
+    summary: p.summary,
+    description: p.description,
+    designApproach: p.designApproach,
+    coverUrl: p.coverUrl,
+    coverPath: p.coverPath,
+    coverAlt: p.coverAlt,
+    videoUrl: p.videoUrl,
+    videoPath: p.videoPath,
+    videoPosterUrl: p.videoPosterUrl,
+    videoPosterPath: p.videoPosterPath,
+    visibility: p.visibility,
+    featured: p.featured,
+    isPlaceholder: p.isPlaceholder,
+    sortOrder: p.sortOrder,
+    media: p.media.map((m) => ({
+      kind: m.kind,
+      url: m.url,
+      storagePath: m.storagePath,
+      alt: m.alt,
+      caption: m.caption,
+      width: m.width,
+      height: m.height,
+    })),
+  };
+}
+
+/**
+ * Publishes or unpublishes a project from the projects list. Publishing applies
+ * the same rules as the editor (a cover image and a description are required).
+ */
+export async function setProjectVisibilityAction(id: string, visibility: Visibility): Promise<ActionResult> {
+  try {
+    await requireAdmin();
+    if (visibility !== "draft" && visibility !== "published") return { ok: false, error: "Unknown visibility." };
+    const { repo } = await getAdminCms();
+    const project = await repo.getProjectById(String(id));
+    if (!project) return { ok: false, error: "That project no longer exists." };
+    if (project.visibility === visibility) return { ok: true };
+    const parsed = projectInputSchema.safeParse({ ...rawInputFrom(project), visibility });
+    if (!parsed.success) {
+      const reason = parsed.error.issues[0]?.message ?? "This project is not ready to publish.";
+      return { ok: false, error: `${reason} Open the project to complete it.` };
+    }
+    await repo.saveProject(parsed.data, project.id);
+    publish();
+    return { ok: true };
+  } catch (e) {
+    return failure(e);
+  }
+}
+
 export async function deleteProjectAction(id: string): Promise<ActionResult> {
   try {
     await requireAdmin();
@@ -242,36 +303,17 @@ export async function duplicateProjectAction(id: string): Promise<ActionResult<{
     }
 
     const input = projectInputSchema.parse({
+      ...rawInputFrom({ ...source, media: items }),
       title: `${source.title} (copy)`.slice(0, 140),
       slug,
-      categoryId: source.categoryId,
-      location: source.location,
-      year: source.year,
-      clientName: source.clientName,
-      projectStatus: source.projectStatus,
-      summary: source.summary,
-      description: source.description,
-      designApproach: source.designApproach,
       coverUrl: cover.url,
       coverPath: cover.path,
-      coverAlt: source.coverAlt,
       videoUrl: video.url,
       videoPath: video.path,
       videoPosterUrl: poster.url,
       videoPosterPath: poster.path,
       visibility: "draft",
       featured: false,
-      isPlaceholder: source.isPlaceholder,
-      sortOrder: source.sortOrder,
-      media: items.map((m) => ({
-        kind: m.kind,
-        url: m.url,
-        storagePath: m.storagePath,
-        alt: m.alt,
-        caption: m.caption,
-        width: m.width,
-        height: m.height,
-      })),
     });
     const saved = await repo.saveProject(input, null);
     publish();

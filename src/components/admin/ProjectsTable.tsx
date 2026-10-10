@@ -1,10 +1,10 @@
 "use client";
 
-import { Copy, ExternalLink, Film, Images, Pencil, Search, Trash2 } from "lucide-react";
+import { Copy, ExternalLink, Eye, EyeOff, Film, Images, Pencil, Search, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useMemo, useState, useTransition } from "react";
-import { deleteProjectAction, duplicateProjectAction } from "@/lib/cms/actions";
+import { deleteProjectAction, duplicateProjectAction, setProjectVisibilityAction } from "@/lib/cms/actions";
 import type { Visibility } from "@/lib/cms/types";
 import { cn } from "@/lib/utils";
 import { ConfirmDialog, useToast } from "./feedback";
@@ -65,6 +65,18 @@ export function ProjectsTable({
       if (!res.ok) return toast(res.error, "error");
       toast(`Copied “${row.title}” as a draft.`);
       router.push(`/admin/projects/${res.data.id}`);
+    });
+  };
+
+  const toggleVisibility = (row: ProjectRow) => {
+    const next = row.visibility === "published" ? "draft" : "published";
+    setBusyId(row.id);
+    startTransition(async () => {
+      const res = await setProjectVisibilityAction(row.id, next);
+      setBusyId(null);
+      if (!res.ok) return toast(res.error, "error");
+      toast(next === "published" ? `“${row.title}” is now live on the website.` : `“${row.title}” is now a draft and hidden from the website.`);
+      router.refresh();
     });
   };
 
@@ -206,6 +218,12 @@ export function ProjectsTable({
                 {r.visibility === "published" && (
                   <RowAction href={`/projects/${r.slug}`} external label={`View ${r.title} on the website`} icon={ExternalLink} />
                 )}
+                <RowAction
+                  onClick={() => toggleVisibility(r)}
+                  disabled={isPending}
+                  label={r.visibility === "published" ? `Unpublish ${r.title} (hide from the website)` : `Publish ${r.title}`}
+                  icon={r.visibility === "published" ? EyeOff : Eye}
+                />
                 <RowAction
                   onClick={() => duplicate(r)}
                   disabled={isPending}

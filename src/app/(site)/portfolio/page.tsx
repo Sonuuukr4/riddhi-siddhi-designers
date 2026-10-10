@@ -14,7 +14,8 @@ export const metadata: Metadata = {
   title: "Portfolio",
   description,
   alternates: { canonical: "/portfolio" },
-  openGraph: { title: `Portfolio — ${site.name}`, description, url: "/portfolio" },
+  openGraph: { title: `Portfolio — ${site.name}`, description, url: "/portfolio", images: ["/opengraph-image"] },
+  twitter: { card: "summary_large_image", title: `Portfolio — ${site.name}`, description, images: ["/opengraph-image"] },
 };
 
 export default async function PortfolioPage() {

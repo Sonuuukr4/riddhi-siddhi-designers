@@ -16,8 +16,9 @@ export const metadata: Metadata = {
     title: `${title} — ${site.name}`,
     description,
     url: "/contact",
+    images: ["/opengraph-image"],
   },
-  twitter: { card: "summary_large_image", title: `${title} — ${site.name}`, description },
+  twitter: { card: "summary_large_image", title: `${title} — ${site.name}`, description, images: ["/opengraph-image"] },
 };
 
 /** The contact section on its own page: direct lines, the enquiry form and the studio's location. */

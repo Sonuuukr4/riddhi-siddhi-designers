@@ -35,7 +35,6 @@ export const metadata: Metadata = {
   description: site.seo.description,
   applicationName: site.name,
   keywords: [
-    "architect in Delhi",
     "architecture studio New Delhi",
     "interior designer Patel Nagar",
     "interior design Delhi",

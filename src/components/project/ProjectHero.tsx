@@ -3,7 +3,6 @@
 import { motion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
 import { usePageTransition } from "@/components/providers/TransitionProvider";
-import { Coordinates } from "@/components/ui/Annotations";
 import { Img } from "@/components/ui/Img";
 import { PlaceholderNote } from "@/components/ui/ParallaxImage";
 import { usePrefersReducedMotion } from "@/hooks/useMediaQuery";
@@ -74,7 +73,8 @@ export function ProjectHero({ project, number, total }: { project: Project; numb
           transition={{ duration: 1, delay: 0.8 }}
         >
           <span>{project.category}</span>
-          <Coordinates className="hidden md:inline" />
+          {/* The project's own location when known — never the studio's coordinates, which would read as the site. */}
+          {project.location && <span className="hidden md:inline">{project.location}</span>}
           <span>Scroll ↓</span>
         </motion.div>
       </div>
